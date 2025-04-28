@@ -5,20 +5,20 @@ module bram_testing;
 reg aclk, aresetn;
 reg awvalid; 
 reg [15:0] awaddr;
+wire awready;
 reg wvalid;
 reg [31:0] wdata;
+wire wready;
+wire bvalid;
 reg bready;
+wire [1:0] bresp;
 reg arvalid;
+wire arready;
 reg [15:0] araddr;
 reg rvalid;
-
-wire arready,awready;
-wire wready;
-wire bvalid; 
-wire [1:0] bresp;
 wire rready;
-wire [1:0] rresp;
 wire [31:0] rdata;
+wire [1:0] rresp;
 
 wire [31:0] loc = myram.RAM[awaddr];
 wire [2:0] state = myram.ram_PS;
@@ -54,6 +54,8 @@ initial
 begin
     #2.5 aresetn = 0;
     #2 aresetn = 1; awvalid  = 0;
+
+    //Performing Two Write Operations to memory
     #10 awvalid = 1; awaddr = 16'h0001;
     #4 wvalid = 1; wdata = 32'h0000000A; awvalid = 0;
     #6 bready = 1; wvalid = 0;
@@ -62,6 +64,7 @@ begin
     #2 wvalid = 1; wdata = 32'h110A0FB9; awvalid = 0;
     #2 bready = 1; wvalid = 0;
     #2 bready = 0;
+    //Reading back the data written in the previous write operations
     #4 arvalid = 1; araddr = 16'hAA0F;
     #20 rvalid = 1;
     #10 $finish;
