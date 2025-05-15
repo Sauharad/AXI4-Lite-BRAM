@@ -1,14 +1,31 @@
 # AXI4-Lite-RAM
 
-This is a design of a single port RAM module of width 32 bits and depth 2^16 with an AXI4-Lite based interface. 
-AXI4-Lite is a bus protocol that uses five different channels with a valid-ready handshake based mechanism for data transfer transactions.
+This project implements a 32-bit single-port RAM with a depth of 2<sup>16</sup> locations, designed to operate as an AXI4-Lite slave for memory-mapped read and write access. The module is written in Verilog and conforms to the AXI4-Lite protocol specification, making it suitable for integration into ARM-based SoCs, microcontrollers, or FPGA designs requiring external host access to memory.
 
-Write Address (AW) - The write address channel is used to communicate to the slave the address to which the master wishes to write data.
+✅ Features
+32-bit data width, 16-bit address space (64 KB memory)
 
-Write Data (W) - The write data channel carries the data which is to be written to the address provided in the AW channel.
+Fully compliant with AXI4-Lite protocol
 
-Write Response (B) - The write response channel carries the response to the write operation given by the slave back to the master.
+Supports all five AXI-Lite channels:
 
-Read Address (AR) - The read address channel is used to communicate the address in the slave from which master wishes to read data.
+Write Address (AW) – Receives write address from master
 
-Read Data (R) - The data read from the address in AR channel is sent by the slave to the master over the R channel.
+Write Data (W) – Receives data to be written
+
+Write Response (B) – Acknowledges completion of write
+
+Read Address (AR) – Receives read address
+
+Read Data (R) – Returns data to master
+
+Implements valid–ready handshake for each channel
+
+Synchronous write and read operations with minimal latency
+
+📦 Use Case
+This RAM module is ideal for testing AXI-Lite-based communication or for embedding small blocks of memory in a larger system design. It can be connected to a processor or DMA master for simple memory-mapped I/O.
+
+🛠️ Simulation
+The module is testable using standard AXI-Lite transaction sequences. Sample testbenches can be constructed to simulate read and write operations and validate response behavior.
+
